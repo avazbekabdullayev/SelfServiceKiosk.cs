@@ -1,0 +1,1 @@
+# SelfServiceKiosk.cs
