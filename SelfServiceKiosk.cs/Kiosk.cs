@@ -1,5 +1,6 @@
 ﻿
 using SelfServiceKiosk.cs;
+using System.Text.Json;
 using static SelfServiceKiosk.cs.Contains;
 
 namespace SelfServiceKiosk
@@ -10,7 +11,10 @@ namespace SelfServiceKiosk
         public order CurrentOrder { get; set; }
         public Kiosk()
         {
-            Items = new List<Fooditem>();
+         
+            List<Fooditem> Items = LoadFoodItems();
+
+/*
             Fooditem osh = new Fooditem();
             osh.Name = "Osh (polov)";
             osh.Price = 3;
@@ -35,7 +39,21 @@ namespace SelfServiceKiosk
             choy.Price = 0.5;
             Items.Add(choy);
 
+
+
+           string serializedItems = JsonSerializer.Serialize(Items);
+
+            Directory.CreateDirectory("Date");
+            string destination = Path.Combine("Date", "food.csv");
+            File.WriteAllText(destination, serializedItems);*/
+
             CurrentOrder = null;
+        }
+
+        private List<Fooditem> LoadFoodItems()
+        {
+           return CSVRepository.GetFooditemsfromCSV();
+             
         }
 
         public void StartNeworder()
